@@ -13,19 +13,26 @@ import java.util.Collection;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
 
-public class BurgerTestParametersGetReceipt {
+public class BurgerParametersGetReceiptTest {
 
     private Burger burger;
+
+    // Моки
+    private Bun bunMock;
+    private Ingredient ingredient1Mock;
+    private Ingredient ingredient2Mock;
 
     private float bunPrice;
     private float ingredient1Price;
     private float ingredient2Price;
     private String expectedReceipt;
 
-    public BurgerTestParametersGetReceipt(float bunPrice, float ingredient1Price, float ingredient2Price, String expectedReceipt) {
+    public BurgerParametersGetReceiptTest(float bunPrice, float ingredient1Price, float ingredient2Price, String expectedReceipt) {
         this.bunPrice = bunPrice;
         this.ingredient1Price = ingredient1Price;
         this.ingredient2Price = ingredient2Price;
@@ -34,15 +41,31 @@ public class BurgerTestParametersGetReceipt {
 
     @Before
     public void init() {
-        Bun bun = new Bun("Test Bun", bunPrice);
 
-        List<Ingredient> ingredients = new ArrayList<>();
+        // Создаем моки вместо реальных объектов
+        bunMock = mock(Bun.class);
+        ingredient1Mock = mock(Ingredient.class);
+        ingredient2Mock = mock(Ingredient.class);
 
-        ingredients.add(new Ingredient(IngredientType.SAUCE, "Test Sauce", ingredient1Price));
-        ingredients.add(new Ingredient(IngredientType.FILLING, "Test Filling", ingredient2Price));
+        // Настраиваем моки
+        when(bunMock.getPrice()).thenReturn(bunPrice);
+        when(bunMock.getName()).thenReturn("Test Bun");
+
+        when(ingredient1Mock.getPrice()).thenReturn(ingredient1Price);
+        when(ingredient1Mock.getType()).thenReturn(IngredientType.SAUCE);
+        when(ingredient1Mock.getName()).thenReturn("Test Sauce");
+
+        when(ingredient2Mock.getPrice()).thenReturn(ingredient2Price);
+        when(ingredient2Mock.getType()).thenReturn(IngredientType.FILLING);
+        when(ingredient2Mock.getName()).thenReturn("Test Filling");
 
         burger = new Burger();
-        burger.setBuns(bun);
+        burger.setBuns(bunMock);
+
+        List<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(ingredient1Mock);
+        ingredients.add(ingredient2Mock);
+
         for (Ingredient ing : ingredients) {
             burger.addIngredient(ing);
         }
