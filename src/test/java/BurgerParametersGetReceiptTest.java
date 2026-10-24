@@ -24,18 +24,18 @@ public class BurgerParametersGetReceiptTest {
 
     // Моки
     private Bun bunMock;
-    private Ingredient ingredient1Mock;
-    private Ingredient ingredient2Mock;
+    private Ingredient ingredientOneMock;
+    private Ingredient ingredientTwoMock;
 
     private float bunPrice;
-    private float ingredient1Price;
-    private float ingredient2Price;
+    private float ingredientOnePrice;
+    private float ingredientTwoPrice;
     private String expectedReceipt;
 
-    public BurgerParametersGetReceiptTest(float bunPrice, float ingredient1Price, float ingredient2Price, String expectedReceipt) {
+    public BurgerParametersGetReceiptTest(float bunPrice, float ingredientOnePrice, float ingredientTwoPrice, String expectedReceipt) {
         this.bunPrice = bunPrice;
-        this.ingredient1Price = ingredient1Price;
-        this.ingredient2Price = ingredient2Price;
+        this.ingredientOnePrice = ingredientOnePrice;
+        this.ingredientTwoPrice = ingredientTwoPrice;
         this.expectedReceipt = expectedReceipt;
     }
 
@@ -44,27 +44,27 @@ public class BurgerParametersGetReceiptTest {
 
         // Создаем моки вместо реальных объектов
         bunMock = mock(Bun.class);
-        ingredient1Mock = mock(Ingredient.class);
-        ingredient2Mock = mock(Ingredient.class);
+        ingredientOneMock = mock(Ingredient.class);
+        ingredientTwoMock = mock(Ingredient.class);
 
         // Настраиваем моки
         when(bunMock.getPrice()).thenReturn(bunPrice);
         when(bunMock.getName()).thenReturn("Test Bun");
 
-        when(ingredient1Mock.getPrice()).thenReturn(ingredient1Price);
-        when(ingredient1Mock.getType()).thenReturn(IngredientType.SAUCE);
-        when(ingredient1Mock.getName()).thenReturn("Test Sauce");
+        when(ingredientOneMock.getPrice()).thenReturn(ingredientOnePrice);
+        when(ingredientOneMock.getType()).thenReturn(IngredientType.SAUCE);
+        when(ingredientOneMock.getName()).thenReturn("Test Sauce");
 
-        when(ingredient2Mock.getPrice()).thenReturn(ingredient2Price);
-        when(ingredient2Mock.getType()).thenReturn(IngredientType.FILLING);
-        when(ingredient2Mock.getName()).thenReturn("Test Filling");
+        when(ingredientTwoMock.getPrice()).thenReturn(ingredientTwoPrice);
+        when(ingredientTwoMock.getType()).thenReturn(IngredientType.FILLING);
+        when(ingredientTwoMock.getName()).thenReturn("Test Filling");
 
         burger = new Burger();
         burger.setBuns(bunMock);
 
         List<Ingredient> ingredients = new ArrayList<>();
-        ingredients.add(ingredient1Mock);
-        ingredients.add(ingredient2Mock);
+        ingredients.add(ingredientOneMock);
+        ingredients.add(ingredientTwoMock);
 
         for (Ingredient ing : ingredients) {
             burger.addIngredient(ing);
